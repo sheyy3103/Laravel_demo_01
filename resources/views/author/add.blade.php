@@ -1,7 +1,11 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <p class="h1 pb-3 text-success text-uppercase text-center">Add a new author</p>
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back</a>
+            <p class="h1 text-success text-uppercase ">Add a new author</p>
+            <span>&nbsp;</span>
+        </div>
         <form action="{{ route('author.added') }}" method="POST">
             @csrf
             <div class="form-group">

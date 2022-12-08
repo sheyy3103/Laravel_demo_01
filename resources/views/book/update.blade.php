@@ -1,7 +1,11 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $book->name }}"</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back</a>
+            <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $book->name }}"</p>
+            <span>&nbsp;</span>
+        </div>
         <form action="{{ route('book.updated',$book->id) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="form-group">
@@ -34,7 +38,7 @@
                 @error('image')
                     <small class="help-text text-danger">{{ $message }}</small>
                 @enderror
-                <img src="/uploads/{{ $book->image }}" alt="" height="75px" width="auto">
+                <img src="{{ url('uploads') }}/{{ $book->image }}" alt="" height="100px" width="auto">
             </div>
             <label for="">Status: </label>
             <div class="form-group d-flex align-items-center">

@@ -1,12 +1,17 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <p class="h1 pb-3 text-success text-uppercase text-center">Add a new book</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back</a>
+            <p class="h1 pb-3 text-success text-uppercase text-center">Add a new book</p>
+            <span>&nbsp;</span>
+        </div>
         <form action="{{ route('book.added') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="">Book's name: </label>
-                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0" name="name">
+                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0"
+                    name="name">
                 @error('name')
                     <small class="help-text text-danger">{{ $message }}</small>
                 @enderror
@@ -54,7 +59,7 @@
                 <label for="">Author's name: </label>
                 <select class="form-control custom-select" name="author_id" id="" style="border-radius: 0">
                     @foreach ($author as $au)
-                        <option value="{{ $au->id }}">{{ $au->id.'. '.$au->name }}</option>
+                        <option value="{{ $au->id }}">{{ $au->id . '. ' . $au->name }}</option>
                     @endforeach
                 </select>
             </div>

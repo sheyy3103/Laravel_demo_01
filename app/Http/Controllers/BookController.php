@@ -114,4 +114,7 @@ class BookController extends Controller
             );
         }
     }
+    public function back(){
+        return redirect()->route('book.book');
+    }
 }

@@ -11,4 +11,8 @@ class Author extends Model
     protected $table = 'author';
     protected $fillable = ['name', 'status'];
     public $timestamps = false;
+    public function book()
+    {
+       return $this->hasMany(Book::class,'author_id','id');
+    }
 }

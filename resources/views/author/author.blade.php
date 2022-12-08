@@ -1,6 +1,6 @@
 @extends('layout.layout')
 @section('main')
-    <div class="container">
+    <div class="container-fluid px-5">
         <div class="d-flex justify-content-between align-items-center py-3">
             <p class="h1 text-secondary font-weight-bold">List Authors</p>
             <a href="{{ route('author.add') }}" class="btn btn-lg btn-outline-success" style="border-radius: 0">Add a new
@@ -55,6 +55,8 @@
                         <td class="text-right w-25">
                             <form action="{{ route('author.delete', $value->id) }}" method="POST">
                                 @method('DELETE') @csrf
+                                <a href="{{ route('author.detail', $value->id) }}" class="btn btn-outline-secondary"
+                                    style="border-radius: 0">View</a>
                                 <a href="{{ route('author.update', $value->id) }}" class="btn btn-outline-info"
                                     style="border-radius: 0">Update</a>
                                 <button type="submit" class="btn btn-outline-danger" style="border-radius: 0"

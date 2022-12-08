@@ -63,4 +63,13 @@ class AuthorController extends Controller
             );
         }
     }
+    public function detail($id)
+    {
+        $author = Author::find($id);
+        $book = $author->book()->paginate(4);
+        return view('author.detail', compact('author','book'));
+    }
+    public function back(){
+        return redirect()->route('author.author');
+    }
 }

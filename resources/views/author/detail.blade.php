@@ -1,10 +1,10 @@
 @extends('layout.layout')
 @section('main')
     <div class="container-fluid px-5">
-        <div class="d-flex justify-content-between align-items-center py-3">
-            <p class="h1 text-secondary font-weight-bold">List Books</p>
-            <a href="{{ route('book.add') }}" class="btn btn-lg btn-outline-success" style="border-radius: 0">Add a new
-                book</a>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back</a>
+            <p class="h1 text-secondary font-weight-bold py-3">List books of "{{ $author->name }}"</p>
+            <span>&nbsp;</span>
         </div>
         @if (session('notification'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -39,9 +39,7 @@
                     <th>Price</th>
                     <th>Sale price</th>
                     <th>Image</th>
-                    <th>Status</th>
-                    <th>Author</th>
-                    <th></th>
+                    <th class="text-right">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,24 +54,12 @@
                         <td>
                            <span class="{{ $value->sale_price == 0 ? 'text-muted' : '' }}"> {{ number_format($value->sale_price,'2','.',',') }}</span>
                         </td>
-                        <td><img src="{{ url('uploads') }}/{{ $value->image }}" alt="" height="75px" width="auto"></td>
-                        <td>
+                        <td><img src="/uploads/{{ $value->image }}" alt="" height="75px" width="auto"></td>
+                        <td class="text-right">
                             <span class="badge badge-{{ $value->status == 0 ? 'success' : 'danger' }}"
                                 style="border-radius: 0">
                                 {{ $value->status == 0 ? 'In stock' : 'Out of stock' }}
                             </span>
-                        </td>
-                        <td>
-                            {{ $value->author->name }}
-                        </td>
-                        <td class="text-right w-25">
-                            <form action="{{ route('book.delete', $value->id) }}" method="POST">
-                                @method('DELETE') @csrf
-                                <a href="{{ route('book.update', $value->id) }}" class="btn btn-outline-info"
-                                    style="border-radius: 0">Update</a>
-                                <button type="submit" class="btn btn-outline-danger" style="border-radius: 0"
-                                    onclick="return confirm('Are you sure about delete {{ $value->name }}? ')">Delete</button>
-                            </form>
                         </td>
                     </tr>
                 @endforeach
