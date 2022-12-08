@@ -1,11 +1,8 @@
 @extends('layout.layout')
 @section('main')
-    <div class="container-fluid px-5">
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back</a>
-            <p class="h1 text-secondary font-weight-bold py-3">List books of "{{ $author->name }}"</p>
-            <span>&nbsp;</span>
-        </div>
+    <div class="container-fluid px-5 py-3">
+        <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back to authors list</a>
+        <p class="h1 text-secondary font-weight-bold py-3 text-center">List books of "{{ $author->name }}"</p>
         @if (session('notification'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -39,7 +36,8 @@
                     <th>Price</th>
                     <th>Sale price</th>
                     <th>Image</th>
-                    <th class="text-right">Status</th>
+                    <th>Status</th>
+                    <th class="text-right"></th>
                 </tr>
             </thead>
             <tbody>
@@ -49,17 +47,22 @@
                         <td class="text-center">{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
                         <td>
-                            {!! $value->sale_price == 0 ? '<span>' : "<del class='text-muted'>" !!}{{ number_format($value->price, '2', '.', ',') }}{!! $value->sale_price == 0 ? '</span>' : '</del>' !!}
+                            {!! $value->sale_price == 0 ? "<span class='text-danger'>" : "<del class='text-muted'>" !!}{{ number_format($value->price) }}<small {{ $value->sale_price == 0 ? '' : 'hidden' }}>$</small>{!! $value->sale_price == 0 ? '</span>' : '</del>' !!}
                         </td>
                         <td>
-                           <span class="{{ $value->sale_price == 0 ? 'text-muted' : '' }}"> {{ number_format($value->sale_price,'2','.',',') }}</span>
+                            <span class="{{ $value->sale_price == 0 ? 'text-muted' : 'text-danger' }}">
+                                {{ number_format($value->sale_price) }}<small {{ $value->sale_price > 0 ? '' : 'hidden' }}>$</small></span>
                         </td>
                         <td><img src="/uploads/{{ $value->image }}" alt="" height="75px" width="auto"></td>
-                        <td class="text-right">
+                        <td>
                             <span class="badge badge-{{ $value->status == 0 ? 'success' : 'danger' }}"
                                 style="border-radius: 0">
                                 {{ $value->status == 0 ? 'In stock' : 'Out of stock' }}
                             </span>
+                        </td>
+                        <td class="text-right" style="width: 10%">
+                            <a href="{{ route('book.detail', $value->id) }}" class="btn btn-outline-secondary"
+                                style="border-radius: 0">View</a>
                         </td>
                     </tr>
                 @endforeach

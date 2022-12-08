@@ -1,11 +1,8 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back</a>
-            <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $author->name }}"</p>
-            <span>&nbsp;</span>
-        </div>
+        <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back to authors list</a>
+        <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $author->name }}"</p>
         <form action="{{ route('author.updated', $author->id) }}" method="POST">
             @csrf @method('PUT')
             <div class="form-group">

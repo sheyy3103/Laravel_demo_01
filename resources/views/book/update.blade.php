@@ -1,16 +1,14 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back</a>
-            <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $book->name }}"</p>
-            <span>&nbsp;</span>
-        </div>
-        <form action="{{ route('book.updated',$book->id) }}" method="POST" enctype="multipart/form-data">
+        <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back to books list</a>
+        <p class="h1 pb-3 text-info text-uppercase text-center">Update of "{{ $book->name }}"</p>
+        <form action="{{ route('book.updated', $book->id) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="form-group">
                 <label for="">Book's name: </label>
-                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0" name="name" value="{{ $book->name }}">
+                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0"
+                    name="name" value="{{ $book->name }}">
                 @error('name')
                     <small class="help-text text-danger">{{ $message }}</small>
                 @enderror
@@ -44,13 +42,15 @@
             <div class="form-group d-flex align-items-center">
                 <div class="form-check mr-5">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="status" value="0" {{ $book->status == 0 ? 'checked' : '' }}>
+                        <input type="radio" class="form-check-input" name="status" value="0"
+                            {{ $book->status == 0 ? 'checked' : '' }}>
                         In stock
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="status" value="1" {{ $book->status == 1 ? 'checked' : '' }}>
+                        <input type="radio" class="form-check-input" name="status" value="1"
+                            {{ $book->status == 1 ? 'checked' : '' }}>
                         Out of stock
                     </label>
                 </div>
@@ -59,7 +59,8 @@
                 <label for="">Author's name: </label>
                 <select class="form-control custom-select" name="author_id" id="" style="border-radius: 0">
                     @foreach ($author as $au)
-                        <option value="{{ $au->id }}" {{ $au->id == $book->author_id ? "selected" : '' }}>{{ $au->id.'. '.$au->name }}</option>
+                        <option value="{{ $au->id }}" {{ $au->id == $book->author_id ? 'selected' : '' }}>
+                            {{ $au->id . '. ' . $au->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -67,4 +68,3 @@
         </form>
     </div>
 @endsection
-

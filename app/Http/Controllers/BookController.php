@@ -114,6 +114,13 @@ class BookController extends Controller
             );
         }
     }
+    public function detail($id)
+    {
+        $book = Book::find($id);
+        $discount = $book->sale_price == 0 ? 0 : (1 - ($book->sale_price/$book->price))*100;
+        $discount = number_format($discount,2,'.',',');
+        return view('book.detail', compact('book','discount'));
+    }
     public function back(){
         return redirect()->route('book.book');
     }

@@ -51,12 +51,16 @@
                         <td class="text-center">{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
                         <td>
-                            {!! $value->sale_price == 0 ? '<span>' : "<del class='text-muted'>" !!}{{ number_format($value->price, '2', '.', ',') }}{!! $value->sale_price == 0 ? '</span>' : '</del>' !!}
+                            {!! $value->sale_price == 0 ? "<span class='text-danger'>" : "<del class='text-muted'>" !!}{{ number_format($value->price) }}<small
+                                {{ $value->sale_price == 0 ? '' : 'hidden' }}>$</small>{!! $value->sale_price == 0 ? '</span>' : '</del>' !!}
                         </td>
                         <td>
-                           <span class="{{ $value->sale_price == 0 ? 'text-muted' : '' }}"> {{ number_format($value->sale_price,'2','.',',') }}</span>
+                            <span
+                                class="{{ $value->sale_price == 0 ? 'text-muted' : 'text-danger' }}">{{ number_format($value->sale_price) }}<small
+                                    {{ $value->sale_price > 0 ? '' : 'hidden' }}>$</small></span>
                         </td>
-                        <td><img src="{{ url('uploads') }}/{{ $value->image }}" alt="" height="75px" width="auto"></td>
+                        <td><img src="{{ url('uploads') }}/{{ $value->image }}" alt="" height="75px"
+                                width="auto"></td>
                         <td>
                             <span class="badge badge-{{ $value->status == 0 ? 'success' : 'danger' }}"
                                 style="border-radius: 0">
@@ -69,6 +73,8 @@
                         <td class="text-right w-25">
                             <form action="{{ route('book.delete', $value->id) }}" method="POST">
                                 @method('DELETE') @csrf
+                                <a href="{{ route('book.detail', $value->id) }}" class="btn btn-outline-secondary"
+                                    style="border-radius: 0">View</a>
                                 <a href="{{ route('book.update', $value->id) }}" class="btn btn-outline-info"
                                     style="border-radius: 0">Update</a>
                                 <button type="submit" class="btn btn-outline-danger" style="border-radius: 0"

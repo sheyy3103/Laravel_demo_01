@@ -1,16 +1,14 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <div class="d-flex justify-content-between align-items-center py-3">
-            <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back</a>
-            <p class="h1 text-success text-uppercase ">Add a new author</p>
-            <span>&nbsp;</span>
-        </div>
+        <a href="{{ route('author.back') }}" class="text-dark">&laquo; Back to authors list</a>
+        <p class="h1 text-success text-uppercase text-center">Add a new author</p>
         <form action="{{ route('author.added') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="">Author's name: </label>
-                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0" name="name">
+                <input type="text" class="form-control" placeholder="Enter name..." style="border-radius: 0"
+                    name="name">
                 @error('name')
                     <small class="help-text text-danger">{{ $message }}</small>
                 @enderror

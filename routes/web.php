@@ -26,7 +26,7 @@ Route::get('/about', [ExampleController::class, 'about'])->name('about');
 
 //AUTHOR
 Route::prefix('author')->group(function () {
-    Route::get('/', [AuthorController::class, 'author'])->name('author.author');
+    Route::get('/list', [AuthorController::class, 'author'])->name('author.author');
     Route::get('/add', [AuthorController::class, 'add'])->name('author.add');
     Route::post('/added', [AuthorController::class, 'added'])->name('author.added');
     Route::get('/update/{id}', [AuthorController::class, 'update'])->name('author.update');
@@ -38,11 +38,12 @@ Route::prefix('author')->group(function () {
 
 //BOOK
 Route::prefix('book')->group(function () {
-    Route::get('/', [BookController::class, 'book'])->name('book.book');
+    Route::get('/list', [BookController::class, 'book'])->name('book.book');
     Route::get('/add', [BookController::class, 'add'])->name('book.add');
     Route::post('/added', [BookController::class, 'added'])->name('book.added');
     Route::get('/update/{id}', [BookController::class, 'update'])->name('book.update');
     Route::put('/updated/{id}', [BookController::class, 'updated'])->name('book.updated');
     Route::delete('/delete/{id}', [BookController::class, 'delete'])->name('book.delete');
+    Route::get('/detail/{id}', [BookController::class, 'detail'])->name('book.detail');
     Route::get('/back', [BookController::class, 'back'])->name('book.back');
 });

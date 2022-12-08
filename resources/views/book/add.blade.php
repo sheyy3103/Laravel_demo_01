@@ -1,11 +1,8 @@
 @extends('layout.layout')
 @section('main')
     <div class="container pt-5">
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back</a>
-            <p class="h1 pb-3 text-success text-uppercase text-center">Add a new book</p>
-            <span>&nbsp;</span>
-        </div>
+        <a href="{{ route('book.back') }}" class="text-dark">&laquo; Back to books list</a>
+        <p class="h1 pb-3 text-success text-uppercase text-center">Add a new book</p>
         <form action="{{ route('book.added') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
