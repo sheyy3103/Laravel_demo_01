@@ -31,7 +31,7 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" style="border-radius: 0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search here..." style="border-radius: 0" name="keyword">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="border-radius: 0">Search</button>
             </form>
         </div>

@@ -11,8 +11,26 @@ class Author extends Model
     protected $table = 'author';
     protected $fillable = ['name', 'status'];
     public $timestamps = false;
+
+    //functions
     public function book()
     {
-       return $this->hasMany(Book::class,'author_id','id');
+        return $this->hasMany(Book::class, 'author_id', 'id');
+        function scopeSearch($query)
+        {
+            if (request()->keyword) {
+                $keyword = request()->keyword;
+                $query = Author::where('name', 'like', '%' . $keyword . '%');
+            }
+            return $query;
+        }
+    }
+    public function scopeSearch($query)
+    {
+        if (request()->keyword) {
+            $keyword = request()->keyword;
+            $query = Author::where('name', 'like', '%' . $keyword . '%');
+        }
+        return $query;
     }
 }

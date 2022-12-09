@@ -10,7 +10,7 @@ class BookController extends Controller
 {
     public function book()
     {
-        $book = Book::paginate(4);
+        $book = Book::search()->paginate(4);
         return view('book.book', compact('book'));
     }
     public function add()

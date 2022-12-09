@@ -9,7 +9,7 @@ class AuthorController extends Controller
 {
     public function author()
     {
-        $author = Author::paginate(4);
+        $author = Author::search()->paginate(4);
         return view('author.author', compact('author'));
     }
     public function add()
@@ -66,7 +66,7 @@ class AuthorController extends Controller
     public function detail($id)
     {
         $author = Author::find($id);
-        $book = $author->book()->paginate(4);
+        $book = $author->book()->search()->paginate(4);
         return view('author.detail', compact('author','book'));
     }
     public function back(){

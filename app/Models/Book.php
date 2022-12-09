@@ -9,10 +9,20 @@ class Book extends Model
 {
     use HasFactory;
     protected $table = 'book';
-    protected $fillable = ['name','price','sale_price','image','status','author_id'];
+    protected $fillable = ['name', 'price', 'sale_price', 'image', 'status', 'author_id'];
     public $timestamps = false;
 
-    public function author(){
-        return $this->hasOne(Author::class,'id','author_id');
+    //functions
+    public function author()
+    {
+        return $this->hasOne(Author::class, 'id', 'author_id');
+    }
+    public function scopeSearch($query)
+    {
+        if (request()->keyword) {
+            $keyword = request()->keyword;
+            $query = Book::where('name', 'like', '%' . $keyword . '%');
+        }
+        return $query;
     }
 }
