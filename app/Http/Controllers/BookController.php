@@ -22,20 +22,12 @@ class BookController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'numeric|min:0|between:0,'.$request->price,
+            'price' => 'required|numeric|gte:1',
+            'sale_price' => 'numeric|gte:0|lte:' . $request->price - 1,
             'image' => 'required|mimes:jpg,jpeg,png,gif,svg'
         ];
         $messages = [
-            'name.required' => "Book's name cannot be blank",
-            'price.required' => "Price cannot be blank",
-            'price.numeric' => "Price must be a number",
-            'price.min' => "Price must be greater than 0",
-            'sale_price.numeric' => "Sale price must be a number",
-            'sale_price.min' => "Sale price must be greater than 0",
-            'sale_price.between' => "Sale price cannot be greater than price",
-            'image.required' => "Please select an image",
-            'image.mimes' => "Ivalid type of image",
+            'sale_price.lte' => "The sale price must be less than the price",
         ];
         $request->validate($rules, $messages);
         $file = $request->file('image');
@@ -56,26 +48,19 @@ class BookController extends Controller
     {
         $author = Author::get();
         $book = Book::find($id);
-        return view('book.update', compact('author','book'));
+        return view('book.update', compact('author', 'book'));
     }
     public function updated($id, Request $request)
     {
         $book = Book::find($id);
         $rules = [
             'name' => 'required',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'numeric|min:0|between:0,'.$request->price,
+            'price' => 'required|numeric|gte:1',
+            'sale_price' => 'numeric|gte:0|lte:' . $request->price - 1,
             'image' => 'mimes:jpg,jpeg,png,gif,svg'
         ];
         $messages = [
-            'name.required' => "Book's name cannot be blank",
-            'price.required' => "Price cannot be blank",
-            'price.numeric' => "Price must be a number",
-            'price.min' => "Price must be greater than 0",
-            'sale_price.numeric' => "Sale price must be a number",
-            'sale_price.min' => "Sale price must be greater than 0",
-            'sale_price.between' => "Sale price cannot be greater than price",
-            'image.mimes' => "Ivalid type of image",
+            'sale_price.lte' => "The sale price must be less than the price",
         ];
         $request->validate($rules, $messages);
         $file_name = $book->image;
@@ -95,7 +80,6 @@ class BookController extends Controller
         ];
         $added = Book::find($id)->update($data);
         return redirect()->route('book.book')->with('notification', 'Updated Successfully');
-
     }
     public function delete($id)
     {
@@ -117,11 +101,12 @@ class BookController extends Controller
     public function detail($id)
     {
         $book = Book::find($id);
-        $discount = $book->sale_price == 0 ? 0 : (1 - ($book->sale_price/$book->price))*100;
-        $discount = number_format($discount,2,'.',',');
-        return view('book.detail', compact('book','discount'));
+        $discount = $book->sale_price == 0 ? 0 : (1 - ($book->sale_price / $book->price)) * 100;
+        $discount = number_format($discount, 2, '.', ',');
+        return view('book.detail', compact('book', 'discount'));
     }
-    public function back(){
+    public function back()
+    {
         return redirect()->route('book.book');
     }
 }

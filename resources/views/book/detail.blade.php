@@ -30,7 +30,7 @@
                             </h2>
                             <small>({{ $discount }}%off)</small>
                         </div>
-                        <button class="btn btn-danger" style="border-radius: 0">Buy Now</button>
+                        <a type="button" href="{{ route('book.update',$book->id) }}" class="btn btn-outline-info" style="border-radius: 0">Update</a>
                         <h3 class="box-title mt-5">Key Highlights</h3>
                         <ul class="list-unstyled">
                             <li><i class="fa fa-check text-success"></i>Sturdy structure</li>
