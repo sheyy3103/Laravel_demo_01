@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -18,26 +19,9 @@ class BookController extends Controller
         $author = Author::get();
         return view('book.add', compact('author'));
     }
-    public function added(Request $request)
+    public function added(AddBookRequest $request)
     {
-        $rules = [
-            'name' => 'required',
-            'price' => 'required|numeric|gte:1',
-            'sale_price' => 'numeric|gte:0|lte:' . $request->price - 1,
-            'image' => 'required|mimes:jpg,jpeg,png,gif,svg'
-        ];
-        $messages = [
-            'name.required' => "Book's name cannot be blank",
-            'price.required' => "Price cannot be blank",
-            'price.numeric' => "Price must be a number",
-            'price.gte' => "Price must be greater than 0",
-            'sale_price.numeric' => "Sale price must be a number",
-            'sale_price.gte' => "Sale price must be greater than or equal to 0",
-            'sale_price.lte' => "The sale price must be less than price",
-            'image.required' => "Please select an image",
-            'image.mimes' => "Ivalid type of image",
-        ];
-        $request->validate($rules, $messages);
+        $request->validated();
         $file = $request->file('image');
         $file_name = time() . '-' . $file->getClientOriginalName();
         $file->move(public_path('uploads'), $file_name);
@@ -58,26 +42,10 @@ class BookController extends Controller
         $book = Book::find($id);
         return view('book.update', compact('author', 'book'));
     }
-    public function updated($id, Request $request)
+    public function updated($id, UpdateBookRequest $request)
     {
         $book = Book::find($id);
-        $rules = [
-            'name' => 'required',
-            'price' => 'required|numeric|gte:1',
-            'sale_price' => 'numeric|gte:0|lte:' . $request->price - 1,
-            'image' => 'mimes:jpg,jpeg,png,gif,svg'
-        ];
-        $messages = [
-            'name.required' => "Book's name cannot be blank",
-            'price.required' => "Price cannot be blank",
-            'price.numeric' => "Price must be a number",
-            'price.gte' => "Price must be greater than 0",
-            'sale_price.numeric' => "Sale price must be a number",
-            'sale_price.gte' => "Sale price must be greater than or equal to 0",
-            'sale_price.lte' => "Sale price must be less than price",
-            'image.mimes' => "Ivalid type of image",
-        ];
-        $request->validate($rules, $messages);
+        $request->validated();
         $file_name = $book->image;
         if ($request->has('image')) {
             unlink('uploads/' . $file_name);

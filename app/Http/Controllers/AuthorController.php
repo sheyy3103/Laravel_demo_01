@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddAuthorRequest;
+use App\Http\Requests\UpdateAuthorRequest;
 use App\Models\Author;
-use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
@@ -16,16 +17,9 @@ class AuthorController extends Controller
     {
         return view('author.add');
     }
-    public function added(Request $request)
+    public function added(AddAuthorRequest $request)
     {
-        $rules = [
-            'name' => 'required|unique:author'
-        ];
-        $messages = [
-            'name.required' => "Author's name cannot be blank",
-            'name.unique' => "Author's name is already taken"
-        ];
-        $request->validate($rules, $messages);
+        $request->validated();
         Author::create($request->all());
         return redirect()->route('author.author')->with('notification', 'Added successfully');
     }
@@ -34,16 +28,9 @@ class AuthorController extends Controller
         $author = Author::find($id);
         return view('author.update', compact('author'));
     }
-    public function updated($id, Request $request)
+    public function updated($id, UpdateAuthorRequest $request)
     {
-        $rules = [
-            'name' => 'required|unique:author,name,' . $id
-        ];
-        $messages = [
-            'name.required' => "Author's name cannot be blank",
-            'name.unique' => "Author's name is already taken"
-        ];
-        $request->validate($rules, $messages);
+        $request->validated();
         Author::find($id)->update($request->all());
         return redirect()->route('author.author')->with('notification', 'Updated successfully');
     }
