@@ -21,11 +21,7 @@ class AuthorController extends Controller
         $rules = [
             'name' => 'required|unique:author'
         ];
-        $messages = [
-            'name.required' => "Author's name cannot be blank",
-            'name.unique' => "Author's name is already taken"
-        ];
-        $request->validate($rules, $messages);
+        $request->validate($rules);
         Author::create($request->all());
         return redirect()->route('author.author')->with('notification', 'Added successfully');
     }
@@ -39,11 +35,7 @@ class AuthorController extends Controller
         $rules = [
             'name' => 'required|unique:author,name,' . $id
         ];
-        $messages = [
-            'name.required' => "Author's name cannot be blank",
-            'name.unique' => "Author's name is already taken"
-        ];
-        $request->validate($rules, $messages);
+        $request->validate($rules);
         Author::find($id)->update($request->all());
         return redirect()->route('author.author')->with('notification', 'Updated successfully');
     }
