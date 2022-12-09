@@ -36,7 +36,7 @@
                     <th>Serial</th>
                     <th class="text-center">ID</th>
                     <th>Name</th>
-                    <th>Total books</th>
+                    <th class="text-center">Total books</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -47,7 +47,7 @@
                         <th scope="row" class="pl-4" style="width: 5%">{{ $loop->iteration }}</th>
                         <td class="text-center">{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
-                        <td class="pl-5">{{ $value->book->count() }}</td>
+                        <td class="text-center">{{ $value->book->count() }}</td>
                         <td>
                             <span class="badge badge-{{ $value->status == 0 ? 'success' : 'danger' }}"
                                 style="border-radius: 0">

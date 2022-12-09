@@ -43,7 +43,7 @@ class AuthorController extends Controller
                 'notification',
                 'Deleted successfully'
             );
-        }catch (\Throwable $th ) {
+        } catch (\Throwable $th) {
             return redirect()->back()->with(
                 'errors',
                 'Deleted unsuccessfully because of being linked to the book(s) in store'
@@ -54,9 +54,10 @@ class AuthorController extends Controller
     {
         $author = Author::find($id);
         $book = $author->book()->search()->paginate(4);
-        return view('author.detail', compact('author','book'));
+        return view('author.detail', compact('author', 'book'));
     }
-    public function back(){
+    public function back()
+    {
         return redirect()->route('author.author');
     }
 }
